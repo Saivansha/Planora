@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planora | Intelligent Study Planner</title>
+  <link rel="stylesheet" href="abc.css">
+</head>
+<body>
+
+    <div id="welcomeScreen" class="welcome-screen">
+  <div class="welcome-card">
+    <h1>Welcome to Planora 🚀</h1>
+    <p>Your smart study planner</p>
+    <button id="enterAppBtn" class="btn primary-btn">Enter App</button>
+  </div>
+</div>
+  <nav class="navbar" id="navbar">
+    <a href="#home" class="brand">Planora <span id="themeLogoIcon" class="theme-logo-icon">🌙</span></a>
+    <button id="navToggleBtn" class="nav-toggle" type="button" aria-label="Toggle navigation">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#planner" class="nav-link">Planner</a>
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#focus" class="nav-link">Focus</a>
+      <a href="#about" class="nav-link">About</a>
+    </div>
+    <div class="nav-controls">
+      <select id="paletteSelect" class="nav-select">
+        <option value="blue">Blue-Purple-Pink</option>
+        <option value="green">Green-Teal-Cyan</option>
+        <option value="purple">Purple-Violet-Indigo</option>
+        <option value="warm">Yellow-Orange-Amber</option>
+        <option value="soothing">Sky-Lavender-Mint</option>
+      </select>
+      <button id="themeToggleBtn" class="btn secondary-btn nav-theme-btn" type="button">🌙 Theme</button>
+    </div>
+  </nav>
+
+  <header id="home" class="hero section">
+    <div class="hero-card">
+      <h1>Planora</h1>
+      <p class="tagline">Plan Smart. Study Better.</p>
+      <p>
+        Build a smart and adaptive study routine with mood-based planning, priority-aware schedules,
+        focus tools, and progress tracking in one beginner-friendly app.
+      </p>
+      <button id="getStartedBtn" class="btn primary-btn" type="button">Get Started</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="planner" class="section card fade-in">
+      <h2>Study Planner</h2>
+      <form id="plannerForm">
+        <div class="grid-3">
+          <div class="form-group">
+            <label for="subjectsInput">Subjects (comma-separated)</label>
+            <input id="subjectsInput" type="text" placeholder="Math, Physics, Java">
+          </div>
+          <div class="form-group">
+            <label for="daysInput">Number of days</label>
+            <input id="daysInput" type="number" min="1" placeholder="7">
+          </div>
+          <div class="form-group">
+            <label for="hoursInput">Study hours per day</label>
+            <input id="hoursInput" type="number" min="1" placeholder="3">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="form-group">
+            <label for="moodSelect">Mood</label>
+            <select id="moodSelect">
+              <option value="fresh">😃 Fresh (hard first)</option>
+              <option value="tired">😐 Tired (easy first)</option>
+              <option value="exhausted">😫 Exhausted (fewer tasks)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="priorityContainer" class="priority-container"></div>
+
+        <div class="button-row">
+          <button id="generateBtn" class="btn primary-btn" type="submit">Generate Plan</button>
+          <button id="copyBtn" class="btn secondary-btn" type="button">Copy Planner</button>
+          <button id="downloadBtn" class="btn secondary-btn" type="button">Download Planner</button>
+          <button id="clearBtn" class="btn danger-btn" type="button">Clear Planner</button>
+        
+        </div>
+        <div class="goal-section">
+  <input id="dailyGoal" type="number" min="1" placeholder="Set daily study goal (hours)">
+  <p id="goalProgress">Goal: 0%</p>
+</div>
+      </form>
+      <p id="smartSuggestion" class="smart-suggestion">Tip: Start with hardest subject first.</p>
+    </section>
+
+    <section id="features" class="section card fade-in">
+      <h2>Smart Features</h2>
+      <div class="features-grid">
+
+  <div class="mini-card">
+    <h3>Insights</h3>
+    <p id="totalTime">Total Time: 0 hrs</p>
+    <p id="topSubject">Top Subject: -</p>
+    <p id="completionRate">Completion: 0%</p>
+  </div>
+
+  <div class="mini-card">
+    <h3>Today Focus</h3>
+    <p id="todayFocusText">Today: -</p>
+    <button id="focusModeBtn" class="btn chip-btn" type="button">Open Focus Section</button>
+    <button id="jumpTodayBtn" class="btn secondary-btn" type="button">Jump to Today's Task</button>
+  </div>
+
+  <div class="mini-card">
+    <h3>Progress Tracker</h3>
+    <p id="progressText">0% Completed</p>
+
+    <div class="progress-wrap">
+      <div id="progressBar" class="progress-bar">
+        <span id="progressPercent"></span>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <span id="totalTasksStat">Total: 0</span>
+      <span id="completedTasksStat">Completed: 0</span>
+      <span id="streakStat">Streak: 0</span>
+    </div>
+  </div>
+
+  <div class="mini-card">
+    <h3>Focus Timer</h3>
+    <p id="timerDisplay" class="timer-display">25:00</p>
+
+    <select id="timerDurationSelect" class="timer-select">
+      <option value="15">15 Minutes</option>
+      <option value="25">25 Minutes</option>
+      <option value="30" selected>30 Minutes</option>
+      <option value="45">45 Minutes</option>
+      <option value="60">60 Minutes</option>
+    </select>
+
+    <div class="button-row">
+      <button id="startTimerBtn" class="btn chip-btn" type="button">Start</button>
+      <button id="pauseTimerBtn" class="btn secondary-btn" type="button">Pause</button>
+      <button id="resetTimerBtn" class="btn chip-btn" type="button">Reset</button>
+    </div>
+  </div>
+
+</div>
+      <div class="button-row">
+  <button id="dailyViewBtn" class="btn chip-btn">Daily View</button>
+  <button id="weeklyViewBtn" class="btn secondary-btn">Weekly View</button>
+</div>
+
+      <div id="planOutput" class="plan-output">
+        <p class="placeholder">Your study plan will appear here.</p>
+      </div>
+      <p id="celebrationMessage" class="celebrate hidden">Great job! All tasks are completed!</p>
+      <canvas id="confettiCanvas"></canvas>
+    </section>
+
+    <section id="focus" class="section card fade-in">
+      <h2>Focus Mode</h2>
+      <p class="placeholder">Distraction-free focus area you can open any time from the navbar.</p>
+      <p id="focusTaskText">Today's task: -</p>
+      <p id="focusTimerDisplay" class="timer-display">25:00</p>
+      <select id="focusDurationSelect" class="timer-select">
+  <option value="15">15 Minutes</option>
+  <option value="25">25 Minutes</option>
+  <option value="30" selected>30 Minutes</option>
+  <option value="45">45 Minutes</option>
+  <option value="60">60 Minutes</option>
+</select>
+      <div class="button-row">
+        <button id="focusStartBtn" class="btn primary-btn" type="button">Start Timer</button>
+        <button id="focusPauseBtn" class="btn secondary-btn" type="button">Pause Timer</button>
+        <button id="focusResetBtn" class="btn danger-btn" type="button">Reset Timer</button>
+        <button id="markTodayDoneBtn" class="btn chip-btn" type="button">Mark Today's Task Done</button>
+      </div>
+    </section>
+
+    <section class="section card fade-in">
+      <h2>Motivation</h2>
+      <p id="quoteText">Stay consistent, success will follow.</p>
+      <button id="newQuoteBtn" class="btn secondary-btn" type="button">New Quote</button>
+    </section>
+
+    <section id="about" class="section card fade-in">
+      <h2>About Me</h2>
+      <p><strong>Name:</strong> Saivansha</p>
+      <p><strong>ID:</strong> 2511981218</p>
+      <p><strong>Course:</strong> B.E CSE</p>
+      <p><strong>College:</strong> Chitkara University</p>
+      <p>I am a beginner web developer learning to build useful applications using HTML, CSS, and JavaScript.</p>
+      <blockquote>Consistency is more powerful than perfection.</blockquote>
+      <div class="button-row">
+        <button id="goToAboutBtn" class="btn secondary-btn" type="button">Go to About Me</button>
+        <button id="backToTopBtn" class="btn secondary-btn" type="button">Back to Top</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="abc.js"></script>
+</body>
+</html>
