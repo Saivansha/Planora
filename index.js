@@ -295,10 +295,23 @@ function renderPlan() {
 
   if (progressTimeout) clearTimeout(progressTimeout);
 
-  progressTimeout = setTimeout(() => {
-    updateProgress();
+progressTimeout = setTimeout(() => {
+  updateProgress();
+
+  const next = firstPendingTask();
+
+  if (next) {
     updateTodayFocus();
-  }, 120);
+
+    // ✅ THIS IS THE NEW LINE YOU ARE ASKING ABOUT
+    setTimeout(scrollToTodayTask, 100);
+
+  } else {
+    todayFocusText.textContent = "All tasks completed 🎉";
+    focusTaskText.textContent = "You're done for today!";
+  }
+
+}, 120);
 });
   });
 
