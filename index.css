@@ -962,3 +962,26 @@ body.dark #about blockquote {
   z-index: 1;
   pointer-events: none;
 }
+@media (max-width: 768px) {
+
+  /* Remove heavy animations */
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Remove GPU-heavy effects */
+  .card,
+  .plan-day,
+  .mini-card,
+  .hero-card {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Reduce blur/glass effects if used */
+  .glass,
+  .welcome-card {
+    backdrop-filter: none !important;
+  }
+}
