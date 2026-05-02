@@ -204,6 +204,7 @@ function updateStreak(allDone) {
   localStorage.setItem(STORAGE_KEYS.streak, JSON.stringify(streak));
   streakStat.textContent = "Streak: " + streak.count;
 }
+let progressTimeout;
 
 function updateProgress() {
   const allTasks = flattenTasks();
@@ -221,7 +222,9 @@ if (progressPercent) {
   if (total > 0 && done === total) {
     celebrationMessage.classList.remove("hidden");
     updateStreak(true);
-    launchConfetti();
+    if (window.innerWidth > 768) {
+  launchConfetti();
+}
   } else {
     celebrationMessage.classList.add("hidden");
   }
@@ -283,14 +286,20 @@ function renderPlan() {
 
   planOutput.querySelectorAll(".task-checkbox").forEach(function (box) {
     box.addEventListener("change", function () {
-      const day = Number(box.dataset.day);
-      const task = Number(box.dataset.task);
-      currentPlan[day].tasks[task].done = box.checked;
-      
-      savePlan();
-      updateProgress();
-updateTodayFocus();
-    });
+  const day = Number(box.dataset.day);
+  const task = Number(box.dataset.task);
+
+  currentPlan[day].tasks[task].done = box.checked;
+
+  savePlan();
+
+  if (progressTimeout) clearTimeout(progressTimeout);
+
+  progressTimeout = setTimeout(() => {
+    updateProgress();
+    updateTodayFocus();
+  }, 120);
+});
   });
 
   updateTodayFocus();
@@ -509,6 +518,11 @@ plannerForm.addEventListener("submit", function (event) {
   event.preventDefault();
   const subjects = parseSubjects(subjectsInput.value);
   const days = Number(daysInput.value);
+
+if (window.innerWidth <= 768 && days > 10) {
+  alert("For mobile, max 10 days allowed for smooth performance");
+  return;
+}
   const hours = Number(hoursInput.value);
   const mood = moodSelect.value;
   if (!subjects.length || days < 1 || hours < 1) {
@@ -556,7 +570,18 @@ enterAppBtn.addEventListener("click", function () {
 goToAboutBtn.addEventListener("click", function () { document.getElementById("about").scrollIntoView({ behavior: "smooth" }); });
 backToTopBtn.addEventListener("click", function () { document.getElementById("home").scrollIntoView({ behavior: "smooth" }); });
 navToggleBtn.addEventListener("click", function () { navLinks.classList.toggle("open"); });
-window.addEventListener("scroll", updateNavHighlight);
+if (window.innerWidth > 768) {
+  window.addEventListener("scroll", updateNavHighlight);
+} else {
+  let scrollTimeout;
+  window.addEventListener("scroll", () => {
+    if (scrollTimeout) return;
+    scrollTimeout = setTimeout(() => {
+      updateNavHighlight();
+      scrollTimeout = null;
+    }, 120);
+  });
+}
 document.querySelectorAll(".nav-link").forEach(link => {
   link.addEventListener("click", () => {
     navLinks.classList.remove("open");
